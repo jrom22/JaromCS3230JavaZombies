@@ -3,21 +3,21 @@ package zombies;
 public abstract class Person {
 
 	//Fields
-	public String race;
-	public String height;
-	public boolean isMale;
-	public int strength;
-	public int age;
-	public int speed;
+	protected String race;
+	protected String height;
+	protected boolean isMale;
+	protected int strength;
+	protected int age;
+	protected int speed;
 	
 	//Constructor
 	public Person(){
-		race= "caucasian";
-		height = "6\"1'";
-		isMale=false;
-		strength = 100;
-		age = 27;
-		speed = 100;
+		setRace("caucasian");
+		setHeight("6\"1'");
+		setMale(false);
+		setStrength(100);
+		setAge(27);
+		setSpeed(100);
 	}
 	
 	public Person(String race, String height, boolean isMale, int strength, int age, int speed)
@@ -28,6 +28,65 @@ public abstract class Person {
 		this.strength=strength;
 		this.age=age;
 		this.speed=speed;
+	}
+
+	public String getRace() {
+		return race;
+	}
+
+	public void setRace(String race) 
+	{
+		this.race = race;
+	}
+
+	public String getHeight() 
+	{	
+		return height;
+	}
+
+	public void setHeight(String height) 
+	{
+		this.height = height;
+	}
+
+	public boolean isMale() 
+	{
+		return isMale;
+	}
+
+	public void setMale(boolean isMale) 
+	{
+		this.isMale = isMale;
+	}
+
+	public int getStrength() 
+	{
+		return strength;
+	}
+
+	public void setStrength(int strength) 
+	{
+		this.strength = strength;
+	}
+
+	public int getAge() 
+	{
+		return age;
+	}
+
+	public void setAge(int age) 
+	{
+		this.age = age;
+	}
+
+	public int getSpeed() 
+	{
+		return speed;
+	}
+
+	public void setSpeed(int speed) 
+	{
+		this.speed = speed;
 	}
 
 }

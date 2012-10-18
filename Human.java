@@ -1,16 +1,9 @@
 package zombies;
 
 public class Human extends Person {
-	//Fields
-	private String race;
-	protected String height;
-	protected boolean isMale;
-	protected int strength;
-	protected int age;
-	protected int speed;
-	protected Weapon item;
-	protected Supplies supps;
 	
+	private Weapon item;
+
 	public Human()
 	{
 		race="Caucasian";
@@ -19,7 +12,7 @@ public class Human extends Person {
 		strength=100;
 		age=27;
 		speed=100;
-		item = new Weapon();
+		Weapon item = new Weapon();
 	}
 	
 	public Human(String race, String height, boolean isMale, int strength, int age, int speed)

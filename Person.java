@@ -3,15 +3,16 @@ package zombies;
 public abstract class Person {
 
 	//Fields
-	protected String race;
-	protected String height;
-	protected boolean isMale;
-	protected int strength;
-	protected int age;
-	protected int speed;
+	private String race;
+	private String height;
+	private boolean isMale;
+	private int strength;
+	private int age;
+	private int speed;
 	
 	//Constructor
-	public Person(){
+	public Person()
+	{
 		setRace("caucasian");
 		setHeight("6\"1'");
 		setMale(false);
@@ -22,15 +23,16 @@ public abstract class Person {
 	
 	public Person(String race, String height, boolean isMale, int strength, int age, int speed)
 	{
-		this.race=race;
-		this.height=height;
-		this.isMale=isMale;
-		this.strength=strength;
-		this.age=age;
-		this.speed=speed;
+		this.race = race;
+		this.height = height;
+		this.isMale = isMale;
+		this.strength = strength;
+		this.age = age;
+		this.speed = speed;
 	}
 
-	public String getRace() {
+	public String getRace()
+	{
 		return race;
 	}
 

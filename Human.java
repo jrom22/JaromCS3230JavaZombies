@@ -1,35 +1,41 @@
 package zombies;
 
-public class Human extends Person {
+public class Human extends Person 
+{
+	private Supplies items;
+	private boolean isBitten;
 	
-	private Weapon item;
-
 	public Human()
 	{
-		race="Caucasian";
-		height="6\"3'";
-		isMale=true;
-		strength=100;
-		age=27;
-		speed=100;
-		Weapon item = new Weapon();
+		items = new Supplies();
+		setRace("Caucasian");
+		setHeight("6\"3'");
+		setMale(true);
+		setStrength(100);
+		setAge(27);
+		setSpeed(100);
+		items.setItem(new Weapon());
+		isBitten = false;
 	}
 	
 	public Human(String race, String height, boolean isMale, int strength, int age, int speed)
 	{
-		this.race=race;
-		this.height=height;
-		this.isMale=isMale;
-		this.strength=strength;
-		this.age=age;
-		this.speed=speed;
-		this.item = new Weapon();
-	
+		super(race,height,isMale,strength, age,speed);
 	}
 	
-	public String GetRace()
+	public boolean hasBeenBitten()
 	{
-		return race;
+		return isBitten;
+	}
+	
+	public void GotBitten()
+	{
+		isBitten = true;
+	}
+	
+	public Weapon GetWeapon()
+	{
+		return items.getItem();
 	}
 	
 }

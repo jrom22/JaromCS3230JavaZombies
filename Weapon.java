@@ -33,6 +33,40 @@ public class Weapon {
 		}
 	}
 	
+	public Weapon(boolean isMelee, int damage, int range, int rate, int ammo)
+	{
+		this.isMelee = isMelee;
+		this.damage = damage;
+		this.range = range;
+		this.rate = rate;
+		this.ammo = ammo;
+		
+	}
+	
+	public void obtainAmmo()
+	{
+		Random r = new Random();
+		int randomInt = r.nextInt(100) + 1;
+		this.ammo += randomInt;
+	}
+	
+	public Weapon obtainNewWeapon()
+	{
+		Random r = new Random();
+		boolean typeIsMelee = false;
+		int randomInt = r.nextInt(2) + 1;
+		if(randomInt != 2)
+		{
+			typeIsMelee = true;
+		}
+		else
+		{
+			typeIsMelee = false;
+		}
+			
+		return new Weapon(typeIsMelee, r.nextInt(100) + 1, r.nextInt(50) + 1, r.nextInt(10) + 1, r.nextInt(100) + 1);
+	}
+	
 	public boolean GetIsMelee()
 	{
 		return isMelee;	

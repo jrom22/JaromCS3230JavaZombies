@@ -20,16 +20,16 @@ public class Enviroment implements Runnable
 
 	public void run() 
 	{
-		List<Person> humanList = SetUpHumans();
-		List<Person> zombieList = SetUpZombies();
+		List<Human> humanList = SetUpHumans();
+		List<Zombie> zombieList = SetUpZombies();
 		
 		StartSimulation(zombieList, humanList);
 		
 	}
 	
-	private List<Person> SetUpZombies()
+	private List<Zombie> SetUpZombies()
 	{
-		List<Person> zombiesList = new ArrayList<Person>();
+		List<Zombie> zombiesList = new ArrayList<Zombie>();
 		
 		for(int i = 0; i <= zombies; i++)
 		{
@@ -40,11 +40,11 @@ public class Enviroment implements Runnable
 		
 	}
 	
-	private List<Person> SetUpHumans()
+	private List<Human> SetUpHumans()
 	{
 		Random r = new Random();
 		
-		List<Person> humanList = new ArrayList<Person>();
+		List<Human> humanList = new ArrayList<Human>();
 		
 		for(int i = 0; i <= humans; i++)
 		{
@@ -52,13 +52,13 @@ public class Enviroment implements Runnable
 			switch (randomNum)
 			{
 				case 1:
-					humanList.add(new Military("White", "6:2", true, 100,25,100));
+					humanList.add(new Military("White", "6:2", true, 150,25,150));
 					break;
 				case 2:
 					humanList.add(new Civilian("Hispanic", "5:5", true, 100,25,100));
 					break;
 				case 3:
-					humanList.add(new Scientist("Asian", "5:2", false, 100,25,100));
+					humanList.add(new Scientist("Asian", "5:2", false, 80,25,80));
 					break;
 			}
 			
@@ -66,7 +66,7 @@ public class Enviroment implements Runnable
 		return humanList;
 	}
 	
-	private void StartSimulation(List<Person> zombieList, List<Person> humanList )
+	private void StartSimulation(List<Zombie> zombieList, List<Human> humanList )
 	{
 		while (days != 0)
 		{
@@ -75,21 +75,67 @@ public class Enviroment implements Runnable
 			int indexForHuman = r.nextInt(humanList.size()) + 1;
 			Fight(zombieList.get(indexForZombie) , humanList.get(indexForHuman));
 			
-			EndOfdayProcessing();
+			EndOfdayProcessing(zombieList, humanList);
 		}
 	}
 	
-	private void Fight(Person zombie, Person human)
+	private void Fight(Zombie zombie, Human human)
 	{
-		//this is where we will have all of our predetermine conditions to determine who will win.
-		//will return a value indicating who one
-		//note if human was bitten the boolean indicator will be updated
+		if(human.GetWeapon().GetIsMelee())
+		{
+			zombie.setStrength(human.GetWeapon().GetDamage());
+			human.setStrength(human.getStrength() - 20);
+			zombie.setStrength(human.GetWeapon().GetDamage());
+			human.setStrength(human.getStrength() - 20);
+		}
+		else
+		{
+			for(int i = 0; i < human.GetWeapon().GetRange(); i += 5)
+			{
+				zombie.setStrength(human.GetWeapon().GetDamage());
+			}
+			
+			human.setStrength(human.getStrength() - 20);
+			
+		}
+		
+		if(zombie.getSpeed() > human.getSpeed())
+		{
+			human.GotBitten();
+		}
+		else
+		{
+			zombie.setStrength(zombie.getStrength() - 10);
+		}
+		
+		if(zombie.isMale() && !human.isMale() && human.getStrength() < zombie.getStrength())
+		{
+			human.GotBitten();
+		}
+		else
+		{
+			zombie.setStrength(zombie.getStrength() -15);
+		}
 		
 	}
 	
-	private void EndOfdayProcessing()
+	private void EndOfdayProcessing(List<Zombie> zombieList, List<Human> humanList )
 	{
-		//slowly humans that are bitten into Zombie
+		for(Zombie z : zombieList)
+		{
+			if(z.getStrength() < 1)
+			{
+				zombieList.remove(z);
+			}
+		}
+		
+		for(Human h : humanList)
+		{
+			if(h.getStrength() < 1)
+			{
+				humanList.remove(h);
+			}
+		}
 	}
 }
 	

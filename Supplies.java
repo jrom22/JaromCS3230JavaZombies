@@ -2,38 +2,59 @@ package zombies;
 
 import java.util.Random;
 
-public class Supplies {
-	//Fields
-	protected int strength;
-	protected int ammo;
-	protected boolean hasWeapon;
-	protected boolean isMelee;
+public class Supplies 
+{
+	private Weapon item;
+	private Food dinner;
+	boolean hasWater;
+	
+	public Supplies()
+	{
+		
+	}
+	
 	
 	public void obtainMedKit(int strength)
 	{
 		strength+=50;
 	}
-	
-	public void obtainAmmo()
+
+
+	public Weapon getItem()
 	{
-		Random r = new Random();
-		int randomInt = r.nextInt(100) + 1;
-		ammo+=randomInt;
+		return item;
+	}
+
+
+	public void setItem(Weapon item)
+	{
+		this.item = item;
+	}
+
+
+	public Food getDinner()
+	{
+		return dinner;
+	}
+
+
+	public void setDinner(Food dinner)
+	{
+		this.dinner = dinner;
+	}
+
+
+	public boolean isHasWater()
+	{
+		return hasWater;
+	}
+
+
+	public void setHasWater(boolean hasWater)
+	{
+		this.hasWater = hasWater;
 	}
 	
-	public void obtainWeapon()
-	{
-		Random r = new Random();
-		int randomInt = r.nextInt(2) + 1;
-		if(randomInt != 2)
-		{
-			isMelee=true;
-		}
-		else
-		{
-			isMelee=false;
-		}
-			
-		hasWeapon=true;
-	}
+	
+	
 }

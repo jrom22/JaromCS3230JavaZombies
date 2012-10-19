@@ -21,8 +21,12 @@ public class Human extends Person
 	public Human(String race, String height, boolean isMale, int strength, int age, int speed)
 	{
 		super(race,height,isMale,strength, age,speed);
-	}
 	
+		items = new Supplies();
+		items.setItem(new Weapon());
+		isBitten = false;
+	}
+		
 	public boolean hasBeenBitten()
 	{
 		return isBitten;

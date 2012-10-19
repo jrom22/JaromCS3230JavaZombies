@@ -68,72 +68,143 @@ public class Enviroment implements Runnable
 	
 	private void StartSimulation(List<Zombie> zombieList, List<Human> humanList )
 	{
+		Random r = new Random();
 		while (days != 0)
 		{
-			Random r = new Random();
-			int indexForZombie = r.nextInt(zombieList.size()) + 1;
-			int indexForHuman = r.nextInt(humanList.size()) + 1;
-			Fight(zombieList.get(indexForZombie) , humanList.get(indexForHuman));
-			
-			EndOfdayProcessing(zombieList, humanList);
-		}
-	}
-	
-	private void Fight(Zombie zombie, Human human)
-	{
-		if(human.GetWeapon().GetIsMelee())
-		{
-			zombie.setStrength(human.GetWeapon().GetDamage());
-			human.setStrength(human.getStrength() - 20);
-			zombie.setStrength(human.GetWeapon().GetDamage());
-			human.setStrength(human.getStrength() - 20);
-		}
-		else
-		{
-			for(int i = 0; i < human.GetWeapon().GetRange(); i += 5)
+			for(int i = r.nextInt(10); i > 0; i-- )
 			{
-				zombie.setStrength(human.GetWeapon().GetDamage());
+				int indexForZombie = r.nextInt(zombieList.size()) + 1;
+				int indexForHuman = r.nextInt(humanList.size()) + 1;
+				switch(Fight(zombieList.get(indexForZombie) , humanList.get(indexForHuman)))
+				{
+					case 0:
+						zombieList.remove(indexForZombie);
+						break;
+					case 1:
+						humanList.remove(indexForHuman);
+						break;
+				}
 			}
 			
-			human.setStrength(human.getStrength() - 20);
+			EndOfdayProcessing(zombieList, humanList);
+			days--;
+		}
+		System.out.println("It is over.....");
+	}
+	
+	private int Fight(Zombie zombie, Human human)
+	{
+		Random r = new Random();
+		if(human.GetWeapon().GetIsMelee())
+		{
+			if(r.nextInt(2) + 1 == 2)
+			{
+				zombie.setStrength(human.GetWeapon().GetDamage());
+				if(zombie.getStrength() > 0)
+				{
+					human.setStrength(human.getStrength() - 20);
+				}
+				if(human.getStrength() > 0)
+				{
+					zombie.setStrength(human.GetWeapon().GetDamage());
+				}
+				if(zombie.getStrength() > 0)
+				{
+					human.setStrength(human.getStrength() - 20);
+				}
+			}
+			else
+			{
+				
+				human.setStrength(human.getStrength() - 20);
+				if(human.getStrength() > 0)
+				{
+					zombie.setStrength(human.GetWeapon().GetDamage());
+				}
+				if(zombie.getStrength() > 0)
+				{
+					human.setStrength(human.getStrength() - 20);
+				}
+				if(human.getStrength() > 0)
+				{
+					zombie.setStrength(human.GetWeapon().GetDamage());
+				}
+			}
+		}
+		else // is ranged 
+		{
+			if(r.nextInt(2) + 1 == 2)
+			{
+				for(int i = 0; i < human.GetWeapon().GetRange(); i++)
+				{
+					zombie.setStrength(human.GetWeapon().GetDamage());
+				}
+				
+				human.setStrength(human.getStrength() - 20);
+			}
+			else
+			{
+				human.setStrength(human.getStrength() - 20);
+				
+				for(int i = 0; i < human.GetWeapon().GetRange(); i++)
+				{
+					zombie.setStrength(human.GetWeapon().GetDamage());
+				}
+			}
+		}
+		
+		if(human.getStrength() > 0 && zombie.getStrength() > 0 )
+		{
+			boolean okToBite = zombie.getStrength() <= 25;
 			
+			if(r.nextInt(2) + 1 == 2)
+			{
+				zombie.setStrength(human.GetWeapon().GetDamage());
+				
+				if(okToBite && zombie.getStrength() > 0)
+				{
+					if(r.nextInt(2) + 1 == 2)
+					{
+						human.GotBitten();
+					}
+				}
+			}
+			else
+			{
+				if(okToBite && zombie.getStrength() > 0)
+				{
+					if(r.nextInt(2) + 1 == 2)
+					{
+						human.GotBitten();
+					}
+				}
+				
+				zombie.setStrength(human.GetWeapon().GetDamage());
+			}
 		}
 		
-		if(zombie.getSpeed() > human.getSpeed())
+		if(zombie.getStrength() < 0)
 		{
-			human.GotBitten();
+			return 1;
+		}
+		else if(human.getStrength() < 0)
+		{
+			return 0;
 		}
 		else
 		{
-			zombie.setStrength(zombie.getStrength() - 10);
+			return 2;
 		}
-		
-		if(zombie.isMale() && !human.isMale() && human.getStrength() < zombie.getStrength())
-		{
-			human.GotBitten();
-		}
-		else
-		{
-			zombie.setStrength(zombie.getStrength() -15);
-		}
-		
 	}
 	
 	private void EndOfdayProcessing(List<Zombie> zombieList, List<Human> humanList )
 	{
-		for(Zombie z : zombieList)
-		{
-			if(z.getStrength() < 1)
-			{
-				zombieList.remove(z);
-			}
-		}
-		
 		for(Human h : humanList)
 		{
-			if(h.getStrength() < 1)
+			if(h.hasBeenBitten())
 			{
 				humanList.remove(h);
+				zombieList.add(new Zombie(h.getRace(), h.getHeight(),h.isMale(),100,h.getAge(),h.getSpeed()));
 			}
 		}
 	}

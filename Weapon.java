@@ -8,7 +8,6 @@ public class Weapon {
 	private int damage;
 	private int range;
 	private int rate;
-	private int ammo;
 	
 	//Constructor
 	public Weapon()
@@ -18,18 +17,18 @@ public class Weapon {
 		if(randomNum != 2 )
 		{
 			isMelee = true;
-			damage = 10;
-			range = 30;
-			rate = 6;
-			ammo = 50;
+			damage = r.nextInt(50);
+			range = 0;
+			rate = r.nextInt(25);
 		}
 		else
 		{
 			isMelee = false;
-			damage = 15;
-			range = 15;
-			rate = 6;
-			ammo = 0;
+			damage = r.nextInt(10);
+			range = r.nextInt(5);
+			rate = r.nextInt(25);
+			damage =  damage * (rate/100);
+			
 		}
 	}
 	
@@ -39,7 +38,6 @@ public class Weapon {
 		this.damage = damage;
 		this.range = range;
 		this.rate = rate;
-		this.ammo = ammo;
 		
 	}
 	
@@ -47,7 +45,6 @@ public class Weapon {
 	{
 		Random r = new Random();
 		int randomInt = r.nextInt(100) + 1;
-		this.ammo += randomInt;
 	}
 	
 	public Weapon obtainNewWeapon()
@@ -87,9 +84,5 @@ public class Weapon {
 		return range;
 	}
 	
-	public int GetAmmo()
-	{
-		return ammo;
-	}
 }
 

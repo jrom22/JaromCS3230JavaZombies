@@ -5,6 +5,7 @@ public class Human extends Person
 	private Supplies items;
 	private boolean isBitten;
 	
+	//Create new human object
 	public Human()
 	{
 		items = new Supplies();
@@ -26,12 +27,14 @@ public class Human extends Person
 		items.setItem(new Weapon());
 		isBitten = false;
 	}
-		
+	
+	//Getter for if Human has been bitten
 	public boolean hasBeenBitten()
 	{
 		return isBitten;
 	}
 	
+	//Setter for if Human has been bitten
 	public void GotBitten()
 	{
 		isBitten = true;

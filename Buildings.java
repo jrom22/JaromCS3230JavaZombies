@@ -1,13 +1,14 @@
 package zombies;
 
 public class Buildings {
-	//Fields
+	//Variables
 	public boolean isResidential;
 	public boolean isIndustrial;
 	public boolean isCommercial;
 	public int capacity;
 	public boolean isVacant;
 	
+	//Create a building object
 	public Buildings()
 	{
 		isResidential=false;

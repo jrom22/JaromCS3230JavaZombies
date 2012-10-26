@@ -1,7 +1,7 @@
 package zombies;
 
 public class Zombie extends Person {
-	//Fields
+	//Variables
 	public String race;
 	public String height;
 	public boolean isMale;
@@ -9,6 +9,7 @@ public class Zombie extends Person {
 	public int age;
 	public int speed;
 	
+	//Set Zombie object
 	public Zombie(String race, String height, boolean isMale, int strength, int age, int speed)
 	{
 		super(race, height, isMale, strength, age, speed);
